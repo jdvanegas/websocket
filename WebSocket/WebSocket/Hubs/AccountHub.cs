@@ -42,7 +42,7 @@ namespace WebSocket.Hubs
           accounts.Add(new Account
           {
             Number = account,
-            Registers = new List<string> { value }
+            Registers = new List<decimal> { value }
           });
         }
 
