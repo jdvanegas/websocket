@@ -13,7 +13,7 @@ namespace WebSocket.Hubs
   {
     private readonly string _path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
     private readonly string _filePath = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data"), "datos.json");
-    public async Task Save(long account, string value)
+    public async Task Save(long account, decimal value)
     {
       CheckFile();
       try

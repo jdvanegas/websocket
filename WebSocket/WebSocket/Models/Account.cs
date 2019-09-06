@@ -8,6 +8,6 @@ namespace WebSocket.Models
   public class Account
   {
     public long Number { get; set; }
-    public List<string> Registers { get; set; } = new List<string>();
+    public List<decimal> Registers { get; set; } = new List<decimal>();
   }
 }
