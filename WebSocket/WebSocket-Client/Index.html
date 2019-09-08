@@ -1,0 +1,24 @@
+﻿<h1>Ingresar Registro</h1>
+<p id="receive"></p>
+
+<label>Cuenta</label>
+<input id="number" class="form-control" type="number" pattern="[0-9]+" />
+<br><br>
+<label>Valor</label>
+<input id="value" class="form-control" type="number" pattern="[0-9]+" />
+<br><br>
+<button class="btn btn-success" id="save">Guardar</button>
+<br>
+<h1>Consultar Cuenta</h1>
+
+<label>Numero de Cuenta</label>
+<input id="account" class="form-control" type="number" pattern="[0-9]+" />
+<br><br>
+<button class="btn btn-info" id="search">Consultar</button>
+<br>
+<p id="accountNumber"></p>
+<h4 id="registersLabel" style="display:none;">Registros</h4>
+<ul id="registers"></ul>
+
+<script src="lib/@aspnet/signalr/dist/browser/signalr.js"></script>
+<script src="js/account.js"></script>

@@ -15,13 +15,14 @@ namespace WebSocket.Hubs
     private readonly string _filePath = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data"), "datos.json");
     public async Task Save(long account, decimal value)
     {
+      var id = Context.ConnectionId;
       CheckFile();
       try
       {
         var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
         var filePath = Path.Combine(path, "datos.json");
         if (!Directory.Exists(path))
-          Directory.CreateDirectory(path);        
+          Directory.CreateDirectory(path);
         if (!File.Exists(filePath))
         {
           var file = File.Create(filePath);
@@ -47,29 +48,29 @@ namespace WebSocket.Hubs
         }
 
         File.WriteAllText(filePath, JsonConvert.SerializeObject(accounts));
-        await Clients.All.SendAsync("ReceiveMessage", "Registro grabado OK");
+        await Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessage", "Registro grabado OK");
       }
       catch (Exception)
       {
-        await Clients.All.SendAsync("ReceiveMessage", "No-OK");
+        await Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessage", "No-OK");
       }
     }
     public async Task Search(long account)
     {
       CheckFile();
       try
-      {        
+      {
         var accounts = JsonConvert.DeserializeObject<List<Account>>(File.ReadAllText(_filePath));
         if (accounts == null) accounts = new List<Account>();
-        var iaccount = accounts.FirstOrDefault(x => x.Number == account);       
-        await Clients.All.SendAsync("ReceiveMessageSearch", JsonConvert.SerializeObject(iaccount, new JsonSerializerSettings
+        var iaccount = accounts.FirstOrDefault(x => x.Number == account);
+        await Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessageSearch", JsonConvert.SerializeObject(iaccount, new JsonSerializerSettings
         {
           ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
         }));
       }
       catch (Exception)
       {
-        await Clients.All.SendAsync("ReceiveMessageSearch", "No-OK");
+        await Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessageSearch", "No-OK");
       }
     }
 

@@ -31,7 +31,6 @@ namespace WebSocket
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
 
-
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);   
       services.AddSignalR();
     }
@@ -47,6 +46,8 @@ namespace WebSocket
       {
         app.UseExceptionHandler("/Error");
       }
+      
+      //app.UseCors(builder => builder.Allow)
 
       app.UseStaticFiles();
       app.UseCookiePolicy();
