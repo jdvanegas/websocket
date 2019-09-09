@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +33,12 @@ namespace WebSocket
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
 
+      services.Configure<ForwardedHeadersOptions>(options =>
+      {
+        options.KnownProxies.Add(IPAddress.Parse("10.0.0.100"));
+      });
+
+
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);   
       services.AddSignalR();
     }
@@ -46,8 +54,14 @@ namespace WebSocket
       {
         app.UseExceptionHandler("/Error");
       }
-      
+
       //app.UseCors(builder => builder.Allow)
+      app.UseForwardedHeaders(new ForwardedHeadersOptions
+      {
+        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+      });
+
+      app.UseAuthentication();
 
       app.UseStaticFiles();
       app.UseCookiePolicy();
