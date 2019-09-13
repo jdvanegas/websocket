@@ -39,7 +39,9 @@ namespace WebSocket
       });
 
 
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);   
+      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);  
+      
+      //AÑADIR SERVICIO SIGNALR PARA WEBSOCKETS
       services.AddSignalR();
     }
 
@@ -47,15 +49,13 @@ namespace WebSocket
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
       if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
+        app.UseDeveloperExceptionPage();     
       else
-      {
         app.UseExceptionHandler("/Error");
-      }
 
-      //app.UseCors(builder => builder.Allow)
+      //PERMITIR PETICIONES DE CUALQUIER ORIGEN, puede remplazarce por un dominio o ip especifica.
+      app.UseCors(builder => builder.AllowAnyOrigin());
+
       app.UseForwardedHeaders(new ForwardedHeadersOptions
       {
         ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -65,6 +65,8 @@ namespace WebSocket
 
       app.UseStaticFiles();
       app.UseCookiePolicy();
+
+      //DEFINIR URL DE CONEXIÓN DEL WEBSOCKET
       app.UseSignalR(routes => routes.MapHub<AccountHub>("/accountHub"));
       app.UseMvc();
     }

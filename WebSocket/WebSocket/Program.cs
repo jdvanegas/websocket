@@ -17,6 +17,7 @@ namespace WebSocket
       CreateWebHostBuilder(args).Build().Run();
     }
 
+    //EJECUTAR APLICACIÓN
     public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
         WebHost.CreateDefaultBuilder(args)
             .UseStartup<Startup>();
