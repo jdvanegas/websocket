@@ -9,8 +9,10 @@ using WebSocket.Models;
 
 namespace WebSocket.Hubs
 {
+  //Hub para procesar las peticiones socket, hereda de la Clase Hub de Signal R
   public class AccountHub : Hub
   {    
+    //AppDomain.CurrentDomain.BaseDirectory es el directorio de compilacion de la aplicación
     private readonly string _path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
     private readonly string _filePath = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data"), "datos.json");
 

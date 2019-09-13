@@ -66,7 +66,7 @@ namespace WebSocket
       app.UseStaticFiles();
       app.UseCookiePolicy();
 
-      //DEFINIR URL DE CONEXIÓN DEL WEBSOCKET
+      //DEFINIR URL DE CONEXIÓN DEL WEBSOCKET, utilizamos nuestro hub de SignalR
       app.UseSignalR(routes => routes.MapHub<AccountHub>("/accountHub"));
       app.UseMvc();
     }
