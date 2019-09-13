@@ -20,7 +20,7 @@ namespace WebSocket.Hubs
     public async Task Save(long account, decimal value)
     {
       var id = Context.ConnectionId;
-      CheckFile(); // Metodo para verificar si el archivo datos.json
+      CheckFile(); // Metodo para verificar si el archivo datos.json existe
       try
       {
         var accounts = JsonConvert.DeserializeObject<List<Account>>(File.ReadAllText(_filePath)); //Deserializa los datos en el archivo datos.json a una Lista
