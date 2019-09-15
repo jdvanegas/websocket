@@ -39,7 +39,14 @@ namespace WebSocket
       });
 
 
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);   
+      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+      services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
+      {
+        builder.AllowAnyMethod().AllowAnyHeader()
+                .WithOrigins("http://localhost:8080")
+                .AllowCredentials();
+      }));
       services.AddSignalR();
     }
 
@@ -54,8 +61,7 @@ namespace WebSocket
       {
         app.UseExceptionHandler("/Error");
       }
-
-      //app.UseCors(builder => builder.Allow)
+      
       app.UseForwardedHeaders(new ForwardedHeadersOptions
       {
         ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -65,7 +71,10 @@ namespace WebSocket
 
       app.UseStaticFiles();
       app.UseCookiePolicy();
+
+      app.UseCors("CorsPolicy");
       app.UseSignalR(routes => routes.MapHub<AccountHub>("/accountHub"));
+      
       app.UseMvc();
     }
   }
