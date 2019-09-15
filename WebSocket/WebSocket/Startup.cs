@@ -26,6 +26,7 @@ namespace WebSocket
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      var appsettings = Configuration.GetSection("AppSettings").Get<AppSettings>();
       services.Configure<CookiePolicyOptions>(options =>
       {
         // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -44,7 +45,7 @@ namespace WebSocket
       services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
       {
         builder.AllowAnyMethod().AllowAnyHeader()
-                .WithOrigins("http://localhost:8080")
+                .WithOrigins(appsettings.AllowOrigins)
                 .AllowCredentials();
       }));
       services.AddSignalR();
