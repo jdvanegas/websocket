@@ -54,13 +54,9 @@ namespace WebSocket
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
       if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
+        app.UseDeveloperExceptionPage();     
       else
-      {
         app.UseExceptionHandler("/Error");
-      }
       
       app.UseForwardedHeaders(new ForwardedHeadersOptions
       {

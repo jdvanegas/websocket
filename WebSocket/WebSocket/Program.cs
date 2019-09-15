@@ -17,8 +17,10 @@ namespace WebSocket
       CreateWebHostBuilder(args).Build().Run();
     }
 
+    //EJECUTAR APLICACIÓN
     public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
         WebHost.CreateDefaultBuilder(args)
+            .UseUrls("http://0.0.0.0:5000")
             .UseStartup<Startup>();
   }
 }
