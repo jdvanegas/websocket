@@ -19,10 +19,9 @@ namespace WebSocket.Hubs
     //METODO PARA GUARDAR EL REGISTRO, SE LLAMA DESDE EL CLIENTE, Recibe el número de cuenta y el valor como parametro
     public async Task Save(long account, decimal value)
     {
-      var id = Context.ConnectionId;
-      CheckFile(); // Metodo para verificar si el archivo datos.json existe
       try
-      {
+      {        
+        CheckFile(); // Metodo para verificar si el archivo datos.json existe
         var accounts = JsonConvert.DeserializeObject<List<Account>>(File.ReadAllText(_filePath)); //Deserializa los datos en el archivo datos.json a una Lista
         if (accounts == null) accounts = new List<Account>();
         var iaccount = accounts.FirstOrDefault(x => x.Number == account); // Busca si la cuenta existe
@@ -41,7 +40,7 @@ namespace WebSocket.Hubs
           });
         }
 
-        File.WriteAllText(_filePath, JsonConvert.SerializeObject(accounts)); // Se serializa la lista a Json y se remplaza el texto en el archivo
+        File.WriteAllText(_filePath, JsonConvert.SerializeObject(accounts)); // Se serializa la lista a Json y se remplaza el texto en el archivo        
         await Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessage", "Registro grabado OK"); // Devuelve Ok al cliente
       }
       catch (Exception)
@@ -52,10 +51,10 @@ namespace WebSocket.Hubs
 
     //METODO PARA BUSCAR UNA CUENTA, Recibe el numero de cuenta como parametro
     public async Task Search(long account)
-    {
-      CheckFile();// Metodo para verificar si el archivo datos.json
+    {      
       try
       {
+        CheckFile();// Metodo para verificar si el archivo datos.json
         var accounts = JsonConvert.DeserializeObject<List<Account>>(File.ReadAllText(_filePath)); //Deserializa los datos en el archivo datos.json a una Lista
         if (accounts == null) accounts = new List<Account>();
         var iaccount = accounts.FirstOrDefault(x => x.Number == account);// Busca si la cuenta existe
